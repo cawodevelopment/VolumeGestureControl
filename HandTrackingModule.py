@@ -43,29 +43,3 @@ class HandDetector:
                     cv.circle(frame, (cx, cy), 10, (255, 0, 255), cv.FILLED)
 
         return lmList
-
-def main():
-    capture = cv.VideoCapture(0)
-    pTime = 0
-    detector = HandDetector()
-    while True:
-        ret, frame = capture.read()
-        frame = detector.findHands(frame)
-        lmList = detector.findPosition(frame)
-
-        cTime = time.time()
-        fps = 1/(cTime-pTime)
-        pTime = cTime
-
-        cv.putText(frame, str(int(fps)), (10, 70), cv.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 2)
-
-        cv.imshow("Webcam", frame)
-
-        if cv.waitKey(20) & 0xFF == ord("d"):
-            break
-
-    capture.release()
-    cv.destroyAllWindows()
-
-if __name__ == "__main__":
-    main()
